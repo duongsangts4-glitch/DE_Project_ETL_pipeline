@@ -1,0 +1,114 @@
+{
+    "id": "2614896656",
+    "type": "IssueCommentEvent",
+    "actor": {
+        "id": 9614759,
+        "login": "GoogleCodeExporter",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/GoogleCodeExporter",
+        "avatar_url": "https://avatars.githubusercontent.com/u/9614759?"
+    },
+    "repo": {
+        "id": 31481077,
+        "name": "chrsmith/google-api-java-client",
+        "url": "https://api.github.com/repos/chrsmith/google-api-java-client"
+    },
+    "payload": {
+        "action": "created",
+        "issue": {
+            "url": "https://api.github.com/repos/chrsmith/google-api-java-client/issues/303",
+            "labels_url": "https://api.github.com/repos/chrsmith/google-api-java-client/issues/303/labels{/name}",
+            "comments_url": "https://api.github.com/repos/chrsmith/google-api-java-client/issues/303/comments",
+            "events_url": "https://api.github.com/repos/chrsmith/google-api-java-client/issues/303/events",
+            "html_url": "https://github.com/chrsmith/google-api-java-client/issues/303",
+            "id": 59367357,
+            "number": 303,
+            "title": "Java import manager for code generator",
+            "user": {
+                "login": "GoogleCodeExporter",
+                "id": 9614759,
+                "avatar_url": "https://avatars.githubusercontent.com/u/9614759?v=3",
+                "gravatar_id": "",
+                "url": "https://api.github.com/users/GoogleCodeExporter",
+                "html_url": "https://github.com/GoogleCodeExporter",
+                "followers_url": "https://api.github.com/users/GoogleCodeExporter/followers",
+                "following_url": "https://api.github.com/users/GoogleCodeExporter/following{/other_user}",
+                "gists_url": "https://api.github.com/users/GoogleCodeExporter/gists{/gist_id}",
+                "starred_url": "https://api.github.com/users/GoogleCodeExporter/starred{/owner}{/repo}",
+                "subscriptions_url": "https://api.github.com/users/GoogleCodeExporter/subscriptions",
+                "organizations_url": "https://api.github.com/users/GoogleCodeExporter/orgs",
+                "repos_url": "https://api.github.com/users/GoogleCodeExporter/repos",
+                "events_url": "https://api.github.com/users/GoogleCodeExporter/events{/privacy}",
+                "received_events_url": "https://api.github.com/users/GoogleCodeExporter/received_events",
+                "type": "User",
+                "site_admin": false
+            },
+            "labels": [
+                {
+                    "url": "https://api.github.com/repos/chrsmith/google-api-java-client/labels/auto-migrated",
+                    "name": "auto-migrated",
+                    "color": "ededed"
+                },
+                {
+                    "url": "https://api.github.com/repos/chrsmith/google-api-java-client/labels/Component-Google-APIs",
+                    "name": "Component-Google-APIs",
+                    "color": "ededed"
+                },
+                {
+                    "url": "https://api.github.com/repos/chrsmith/google-api-java-client/labels/Milestone-CodeGenVersion1.3.0",
+                    "name": "Milestone-CodeGenVersion1.3.0",
+                    "color": "ededed"
+                },
+                {
+                    "url": "https://api.github.com/repos/chrsmith/google-api-java-client/labels/Priority-Low",
+                    "name": "Priority-Low",
+                    "color": "ededed"
+                },
+                {
+                    "url": "https://api.github.com/repos/chrsmith/google-api-java-client/labels/Type-Enhancement",
+                    "name": "Type-Enhancement",
+                    "color": "ededed"
+                }
+            ],
+            "state": "closed",
+            "locked": false,
+            "assignee": null,
+            "milestone": null,
+            "comments": 2,
+            "created_at": "2015-02-28T23:59:59Z",
+            "updated_at": "2015-03-01T00:00:00Z",
+            "closed_at": "2015-02-28T23:59:59Z",
+            "body": "```\n\nThe way imports are managed in the generator right now is more complicated, \ninconsistent, and error-prone than it needs to be.\n\nHere is one example in java_generator.py copied below:\n\n   type_for_format = self._SCHEMA_TYPE_TO_JAVA_TYPE.get(json_format)\n   if type_for_format:\n     native_format = type_for_format\n   else:\n     native_format = self._SCHEMA_TYPE_TO_JAVA_TYPE.get(json_type, json_type)\n\n...\n\n   # Some types are not imported by default. We must explicitly import them\n   if native_format == 'BigInteger':\n     element.requires_imports.append('java.math.BigInteger')\n   elif native_format == 'DateTime':\n     element.requires_imports.append('com.google.api.client.util.DateTime')\n\nHere's another example:\n\nhttp://code.google.com/p/google-apis-client-generator/source/browse/src/googleap\nis/codegen/java/default/templates/___package___/ApiClient.java.tmpl\n\ncopied below:\n\n{% if api.dataWrapper %}\nimport com.google.api.client.googleapis.json.JsonCContent;\nimport com.google.api.client.googleapis.json.JsonCParser;\n{% endif %}\n\n\nHere's what we did in the GData code generator that I found very effective: \nevery time you use a Java class you call \nuse(\"com.google.api.client.googleapis.json.JsonCContent\").  It automatically \ntracks all of the \"extraImports\" this way, and so you never have write any \nexplicit import statements in your templates.  If that section of generation \nisn't called, use() is never called.  So you don't need to duplicate your \nif-logic between the code section and the import section.  It also takes care \nof other logic like determining if there is a collision between two classes and \ntherefore decide when to use just the class name or a fully-qualified class \nname.\n```\n\nOriginal issue reported on code.google.com by `rmis...@google.com` on 27 Sep 2011 at 3:31"
+        },
+        "comment": {
+            "url": "https://api.github.com/repos/chrsmith/google-api-java-client/issues/comments/76558893",
+            "html_url": "https://github.com/chrsmith/google-api-java-client/issues/303#issuecomment-76558893",
+            "issue_url": "https://api.github.com/repos/chrsmith/google-api-java-client/issues/303",
+            "id": 76558893,
+            "user": {
+                "login": "GoogleCodeExporter",
+                "id": 9614759,
+                "avatar_url": "https://avatars.githubusercontent.com/u/9614759?v=3",
+                "gravatar_id": "",
+                "url": "https://api.github.com/users/GoogleCodeExporter",
+                "html_url": "https://github.com/GoogleCodeExporter",
+                "followers_url": "https://api.github.com/users/GoogleCodeExporter/followers",
+                "following_url": "https://api.github.com/users/GoogleCodeExporter/following{/other_user}",
+                "gists_url": "https://api.github.com/users/GoogleCodeExporter/gists{/gist_id}",
+                "starred_url": "https://api.github.com/users/GoogleCodeExporter/starred{/owner}{/repo}",
+                "subscriptions_url": "https://api.github.com/users/GoogleCodeExporter/subscriptions",
+                "organizations_url": "https://api.github.com/users/GoogleCodeExporter/orgs",
+                "repos_url": "https://api.github.com/users/GoogleCodeExporter/repos",
+                "events_url": "https://api.github.com/users/GoogleCodeExporter/events{/privacy}",
+                "received_events_url": "https://api.github.com/users/GoogleCodeExporter/received_events",
+                "type": "User",
+                "site_admin": false
+            },
+            "created_at": "2015-03-01T00:00:00Z",
+            "updated_at": "2015-03-01T00:00:00Z",
+            "body": "```\nThis issue was reported internally by yanivi@google.com\n```\n\nOriginal comment by `rmis...@google.com` on 27 Sep 2011 at 5:42"
+        }
+    },
+    "public": true,
+    "created_at": "2015-03-01T00:00:00Z"
+}
