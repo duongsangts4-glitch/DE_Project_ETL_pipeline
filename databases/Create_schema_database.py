@@ -8,7 +8,7 @@ def schema_mysql(connection, cursor):
     connection.database = database
     connection.commit()
     try:
-        with open('../src/schema_sql/schema.sql', 'r') as files:
+        with open('../src/schema_sql/schema_new.sql', 'r') as files:
             file = files.read()
             command_sql = [cmd.strip() for cmd in file.split(';') if cmd.strip()]
             for cmd in command_sql:
